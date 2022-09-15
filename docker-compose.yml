@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mongodb:
+    container_name: devoir1
+    image: mongo:5
+    ports:
+      - "28017:27017"
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - APP_USER=$APP_USER
+      - APP_PWD=$APP_PWD
+      - DB_NAME=$DB_NAME
+      - DB_COLLECTION_NAME=$DB_COLLECTION_NAME
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+
+    volumes:
+      - "$PWD/datastore:/datastore"
+      - "$PWD/scripts/populate-mongoDB-data.sh:/docker-entrypoint-initdb.d/populate-mongoDB-data.sh"
+      - "$PWD/scripts/app-user-creation.js:/docker-entrypoint-initdb.d/app-user-creation.js"
+      - "$PWD/scripts/populate-mongoDB-index.js:/docker-entrypoint-initdb.d/populate-mongoDB-index.js"
